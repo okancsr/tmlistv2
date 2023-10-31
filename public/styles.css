@@ -1,0 +1,33 @@
+/* Apply styles to the entire table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+/* Apply styles to table header (th) cells */
+th {
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+    padding: 10px;
+}
+
+/* Apply styles to alternating table rows */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Apply styles to table data (td) cells */
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Hover effect on rows */
+tr:hover {
+    background-color: #ddd;
+}

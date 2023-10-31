@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <title>Trafolar</title>
+    <link href="/public/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+
+</head>
+
+<body>
+    <h1>Veri Detayları</h1>
+    <table border="1">
+        <tr>
+            <th>_id</th>
+            <th>Tarih</th>
+            <th>Sayac Etso Kodu</th>
+            <th>Üretim Miktari (MWh)</th>
+            <th>Tüketim Miktari (MWh)</th>
+            <th>Çekis Endüktif (MWh)</th>
+            <th>Çekis Kapasitif (MWh)</th>
+            <th>Veris Endüktif (MWh)</th>
+            <th>Veris Kapasitif (MWh)</th>
+        </tr>
+        <% data.forEach((item)=> { %>
+            <tr>
+                <td>
+                    <%= item._id %>
+                </td>
+                <td>
+                    <%= item.Tarih %>
+                </td>
+                <td>
+                    <%= item["Sayaç Etso Kodu"] %>
+                </td>
+                <td>
+                    <%= item["Üretim Miktari (MWh)"] %>
+                </td>
+                <td>
+                    <%= item["Tüketim Miktari (MWh)"] %>
+                </td>
+                <td>
+                    <%= item["Çekis Endüktif (MWh)"] %>
+                </td>
+                <td>
+                    <%= item["Çekis Kapasitif (MWh)"] %>
+                </td>
+                <td>
+                    <%= item["Veris Endüktif (MWh)"] %>
+                </td>
+                <td>
+                    <%= item["Veris Kapasitif (MWh)"] %>
+                </td>
+            </tr>
+            <% }); %>
+    </table>
+    <!-- <div>
+        <% for (let i=1; i <=pageCount; i++) { %>
+            <a href="/?page=<%= i %>">
+                <%= i %>
+            </a>
+            <% } %>
+    </div> -->
+    <div>
+        <% if (page> 1) { %>
+            <a href="/?page=1">&lt;&lt;</a>
+            <a href="/?page=<%= page - 1 %>">&lt;</a>
+            <% } %>
+                <a href="/?page=1">1</a>
+                <a href="/?page=2">2</a>
+                <a href="/?page=3">3</a>
+                <a href="/?page=4">4</a>
+                <a href="/?page=5">5</a>
+                <a href="/?page=6">6</a>
+                <a href="/?page=7">7</a>
+                <a href="/?page=8">8</a>
+                <a href="/?page=9">9</a>
+                <a href="/?page=10">10</a>
+                <% if (page < pageCount) { %>
+                    <a href="/?page=<%= page + 1 %>">&gt;</a>
+                    <a href="/?page=<%= pageCount %>">&gt;&gt;</a>
+                    <% } %>
+    </div>
+
+    <!-- <div>
+        <% if (page> 1) { %>
+            <a href="/?page=1">&lt;&lt;</a>
+            <a href="/?page=<%= page - 1 %>">&lt;</a>
+            <% } %>
+                <input type="number" id="pageInput" min="1" max="<%= pageCount %>" value="<%= page %>">
+                <button onclick="goToPage()">Git</button>
+                <% if (page < pageCount) { %>
+                    <a href="/?page=<%= page + 1 %>">&gt;</a>
+                    <a href="/?page=<%= pageCount %>">&gt;&gt;</a>
+                    <% } %>
+    </div> -->
+
+
+    <form method="post" action="/changePage">
+        <input type="number" name="pageNumber" min="1" max="<%= pageCount %>" value="<%= page %>">
+        <button type="submit">Sayfaya Git</button>
+    </form>
+
+
+
+
+
+
+</body>
+
+</html>
