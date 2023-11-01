@@ -85,18 +85,6 @@
                     <% } %>
     </div>
 
-    <!-- <div>
-        <% if (page> 1) { %>
-            <a href="/?page=1">&lt;&lt;</a>
-            <a href="/?page=<%= page - 1 %>">&lt;</a>
-            <% } %>
-                <input type="number" id="pageInput" min="1" max="<%= pageCount %>" value="<%= page %>">
-                <button onclick="goToPage()">Git</button>
-                <% if (page < pageCount) { %>
-                    <a href="/?page=<%= page + 1 %>">&gt;</a>
-                    <a href="/?page=<%= pageCount %>">&gt;&gt;</a>
-                    <% } %>
-    </div> -->
 
 
     <form method="post" action="/changePage">
@@ -108,7 +96,32 @@
 
 
 
+    <button id="calculateTotalButton">Toplam Değerleri Hesapla</button>
+    <div id="totalResult"></div>
+
+    <script>
+        document.getElementById('calculateTotalButton').addEventListener('click', function () {
+            // Butona tıklandığında çalışacak kod
+            fetch('../toplam') // /toplam adresine GET isteği gönderiyoruz
+                .then(response => response.json()) // Yanıtı JSON formatına dönüştürüyoruz
+                .then(totalValues => {
+                    // Toplam değerleri kullanarak istediğiniz işlemi yapabilirsiniz
+                    const totalResultElement = document.getElementById('totalResult');
+                    totalResultElement.innerHTML = `
+              <p>Toplam Üretim Miktari (MWh): ${totalValues.totalÜretim}</p>
+              <p>Toplam Tüketim Miktari (MWh): ${totalValues.totalTüketim}</p>
+              <p>Toplam Çekis Endüktif (MWh): ${totalValues.totalÇekisEndüktif}</p>
+              <p>Toplam Çekis Kapasitif (MWh): ${totalValues.totalÇekisKapasitif}</p>
+              <p>Toplam Veris Endüktif (MWh): ${totalValues.totalVerisEndüktif}</p>
+              <p>Toplam Veris Kapasitif (MWh): ${totalValues.totalVerisKapasitif}</p>
+            `;
+                });
+        });
+    </script>
+
 
 </body>
+
+
 
 </html>

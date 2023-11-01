@@ -1,8 +1,8 @@
-
-
 import { MongoClient } from "mongodb";
 import express from "express";
 import ejs from "ejs";
+import getTotalValues from './toplam.js'; // Dosya yolu doğru olmalı
+
 
 
 
@@ -50,7 +50,7 @@ app.get("/", async (req, res) => {
 });
 
 
-
+//app.js
 app.post("/changePage", (req, res) => {
     const pageNumber = parseInt(req.body.pageNumber);
     if (pageNumber >= 1 && pageNumber <= pageCount) {
@@ -59,6 +59,20 @@ app.post("/changePage", (req, res) => {
     } else {
         // Geçersiz sayfa numarası
         res.status(400).send("Geçersiz sayfa numarası");
+    }
+});
+
+
+app.get("/toplam", async (req, res) => {
+    const targetSayaçKodu = "40Z000001668245U"; // Hesaplamak istediğiniz sayaç kodu
+
+    try {
+        const totalValues = await getTotalValues(targetSayaçKodu);
+
+        res.status(200).json(totalValues);
+    } catch (err) {
+        console.error("Hata oluştu: ", err);
+        res.status(500).json({ error: "Toplam değerler hesaplanırken hata oluştu." });
     }
 });
 
