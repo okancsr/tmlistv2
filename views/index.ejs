@@ -103,13 +103,13 @@
                     // Toplam değerleri kullanarak istediğiniz işlemi yapabilirsiniz
                     const totalResultElement = document.getElementById('totalResult');
                     totalResultElement.innerHTML = `
-              <p>Toplam Üretim Miktari (MWh): ${totalValues.totalÜretim}</p>
-              <p>Toplam Tüketim Miktari (MWh): ${totalValues.totalTüketim}</p>
-              <p>Toplam Çekis Endüktif (MWh): ${totalValues.totalÇekisEndüktif}</p>
-              <p>Toplam Çekis Kapasitif (MWh): ${totalValues.totalÇekisKapasitif}</p>
-              <p>Toplam Veris Endüktif (MWh): ${totalValues.totalVerisEndüktif}</p>
-              <p>Toplam Veris Kapasitif (MWh): ${totalValues.totalVerisKapasitif}</p>
-              <p>Toplam Veris Kapasitif (MWh): ${totalValues.totalVerisKapasitif}/</p>
+              <p>Toplam Üretim Miktari (MWh): ${totalValues.totalÜretim.toFixed(2)}</p>
+              <p>Toplam Tüketim Miktari (MWh): ${totalValues.totalTüketim.toFixed(2)}</p>
+              <p>Toplam Çekis Endüktif (MWh): ${totalValues.totalÇekisEndüktif.toFixed(2)}</p>
+              <p>Toplam Çekis Kapasitif (MWh): ${totalValues.totalÇekisKapasitif.toFixed(2)}</p>
+              <p>Toplam Veris Endüktif (MWh): ${totalValues.totalVerisEndüktif.toFixed(2)}</p>
+              <p>Toplam Veris Kapasitif (MWh): ${totalValues.totalVerisKapasitif.toFixed(2)}</p>
+            
               <p>Endüktif Oran: % ${totalValues.endüktifOran}</p>
               <p>Kapasitif Oran: % ${totalValues.kapasitifOran}</p>
             `;
