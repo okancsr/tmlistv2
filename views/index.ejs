@@ -57,13 +57,7 @@
             </tr>
             <% }); %>
     </table>
-    <!-- <div>
-        <% for (let i=1; i <=pageCount; i++) { %>
-            <a href="/?page=<%= i %>">
-                <%= i %>
-            </a>
-            <% } %>
-    </div> -->
+
     <div>
         <% if (page> 1) { %>
             <a href="/?page=1">&lt;&lt;</a>
@@ -84,6 +78,7 @@
                     <a href="/?page=<%= pageCount %>">&gt;&gt;</a>
                     <% } %>
     </div>
+
 
 
 
@@ -114,6 +109,9 @@
               <p>Toplam Çekis Kapasitif (MWh): ${totalValues.totalÇekisKapasitif}</p>
               <p>Toplam Veris Endüktif (MWh): ${totalValues.totalVerisEndüktif}</p>
               <p>Toplam Veris Kapasitif (MWh): ${totalValues.totalVerisKapasitif}</p>
+              <p>Toplam Veris Kapasitif (MWh): ${totalValues.totalVerisKapasitif}/</p>
+              <p>Endüktif Oran: % ${totalValues.endüktifOran}</p>
+              <p>Kapasitif Oran: % ${totalValues.kapasitifOran}</p>
             `;
                 });
         });

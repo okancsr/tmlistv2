@@ -1,7 +1,8 @@
 import { MongoClient } from "mongodb";
 import express from "express";
 import ejs from "ejs";
-import getTotalValues from './toplam.js'; // Dosya yolu doğru olmalı
+import getTotalValues from './toplam.js'; // Dosya yolu doğru olmalı. Bu fonksiyon,
+// CSV verilerinden toplam değerleri hesaplar ve bir dizi olarak döndürür.
 
 
 
@@ -17,13 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 
 
 const url = "mongodb+srv://okances:Hayal1991@cluster0.uwggqpl.mongodb.net/excelDB";
-const dbName = "excelDB";
-const collectionName = "csvDB";
+const dbName = "excel2DB";
+const collectionName = "csv2DB";
 const pageSize = 50;
 
-
-
-let pageCount; // pageCount değişkenini tanımlayın
+let pageCount;
 
 app.get("/", async (req, res) => {
     const client = new MongoClient(url, { useUnifiedTopology: true });
@@ -33,14 +32,17 @@ app.get("/", async (req, res) => {
         const database = client.db(dbName);
         const collection = database.collection(collectionName);
 
+
         const page = parseInt(req.query.page) || 1; // Sayfa numarasını sorgu parametresinden al
 
         const skip = (page - 1) * pageSize;
         const data = await collection.find().skip(skip).limit(pageSize).toArray();
 
-        pageCount = Math.ceil(await collection.countDocuments() / pageSize); // pageCount'i burada tanımlayın
+        // pageCount değişkenini const ile başlatın ve değerini hesaplayın
+        pageCount = Math.ceil(await collection.countDocuments() / pageSize);
 
-        res.render("index.ejs", { data, pageCount, page }); // EJS şablonunu kullanarak HTML sayfasını render et
+        // res.render fonksiyonuna pageCount değişkenini bir parametre olarak ekleyin
+        res.render("index.ejs", { data, pageCount, page });
     } catch (err) {
         console.error("Hata oluştu: ", err);
         res.status(500).send("Sunucu hatası");
@@ -49,8 +51,57 @@ app.get("/", async (req, res) => {
     }
 });
 
+const traetso1 = "40Z000007706314S";
+const trbetso1 = "40Z000007706315Q";
 
-//app.js
+app.get('/yantoplam', async (req, res) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    const traetso1 = "40Z000007706314S";
+    const trbetso1 = "40Z000007706315Q";
+
+    try {
+        await client.connect();
+        const database = client.db(dbName);
+        const collection = database.collection(collectionName);
+
+        // Belirli "Sayaç Etso Kodu" ile eşleşen tüm belgeleri al
+        const dataTraetso1 = await collection.find({ "Sayaç Etso Kodu": traetso1 }).toArray();
+        const dataTrbetso1 = await collection.find({ "Sayaç Etso Kodu": trbetso1 }).toArray();
+
+        // Şimdi her iki sorgu sonucunu birleştirin
+        const combinedData = dataTraetso1.concat(dataTrbetso1);
+
+        var gruplar = {};
+        combinedData.forEach(function (values) {
+            var tarih = values.Tarih;
+            if (!gruplar[tarih]) {
+                gruplar[tarih] = {
+                    Tarih: tarih,
+                    ÜretimMiktari: 0, // Üretim miktarı için toplam değeri burada saklayın
+                    TüketimMiktari: 0, // Tüketim miktarı için toplam değeri burada saklayın
+                    // Diğer verileri buraya ekleyin
+                };
+            }
+            gruplar[tarih].ÜretimMiktari += parseFloat(values["Üretim Miktari (MWh)"].replace(",", ".")) || 0;
+            gruplar[tarih].TüketimMiktari += parseFloat(values["Tüketim Miktari (MWh)"].replace(",", ".")) || 0;
+            // Diğer verileri de burada toplayın
+        });
+
+        var gruplarArray = [];
+        for (var tarih in gruplar) {
+            gruplarArray.push(gruplar[tarih]);
+        }
+
+        res.render('kay1', { gruplar: gruplarArray });
+
+    } catch (err) {
+        console.error("Hata oluştu: ", err);
+    } finally {
+        client.close();
+    }
+});
+
+
 app.post("/changePage", (req, res) => {
     const pageNumber = parseInt(req.body.pageNumber);
     if (pageNumber >= 1 && pageNumber <= pageCount) {
@@ -64,11 +115,11 @@ app.post("/changePage", (req, res) => {
 
 
 app.get("/toplam", async (req, res) => {
-    const targetSayaçKodu = "40Z000001668245U"; // Hesaplamak istediğiniz sayaç kodu
+    const targetSayaçKodu = "40Z000007706314S"; // Hesaplamak istediğiniz sayaç kodu
 
     try {
         const totalValues = await getTotalValues(targetSayaçKodu);
-
+        console.log("totalValues:" + totalValues);
         res.status(200).json(totalValues);
     } catch (err) {
         console.error("Hata oluştu: ", err);

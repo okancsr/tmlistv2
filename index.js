@@ -3,8 +3,8 @@ import fs from 'fs';
 import csv from 'csv-parser';
 
 const databaseURL = 'mongodb+srv://okances:Hayal1991@cluster0.uwggqpl.mongodb.net/excelDB';
-const dbName = 'excelDB'; // Veritabanı adı
-const collectionName = 'csvDB'; // Koleksiyon adı
+const dbName = 'excel2DB'; // Veritabanı adı
+const collectionName = 'csv2DB'; // Koleksiyon adı
 
 async function createDatabaseAndCollection() {
     const client = new MongoClient(databaseURL);
@@ -14,7 +14,7 @@ async function createDatabaseAndCollection() {
         console.log('MongoDB bağlantısı başarılı.');
 
         const db = client.db(dbName);
-        await db.createCollection(collectionName);
+        await db.createCollection(collectionName);// bu satır silinebilir
 
         console.log(`Veritabanı "${dbName}" ve koleksiyon "${collectionName}" oluşturuldu.`);
     } catch (err) {
@@ -36,7 +36,7 @@ async function importCSV() {
 
         const results = [];
 
-        fs.createReadStream('Sayfa2.csv')
+        fs.createReadStream('sayfa2.csv')
             .pipe(csv())
             .on('data', (row) => {
                 results.push(row);
@@ -60,3 +60,5 @@ createDatabaseAndCollection()
     .then(() => {
         importCSV();
     });
+
+

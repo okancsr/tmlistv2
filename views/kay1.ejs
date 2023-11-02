@@ -1,0 +1,37 @@
+<!-- kay1.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yantoplam Sayfası</title>
+    <link href="/public/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <h1>Yantoplam Sayfası</h1>
+    <table>
+        <tr>
+            <th>Tarih</th>
+            <th>Toplam Üretim Miktari (MWh)</th>
+            <th>Toplam Tüketim Miktari (MWh)</th>
+        </tr>
+        <% gruplar.forEach(function (grup) { %>
+            <tr>
+                <td>
+                    <%= grup.Tarih %>
+                </td>
+                <td>
+                    <%= grup.ÜretimMiktari %>
+                </td>
+                <td>
+                    <%= grup.TüketimMiktari %>
+                </td>
+            </tr>
+            <% }); %>
+    </table>
+
+</body>
+
+</html>
